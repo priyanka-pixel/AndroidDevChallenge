@@ -15,6 +15,8 @@
  */
 package dev.spikeysanju.wiggles.component
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,15 +39,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import dev.spikeysanju.wiggles.R
 
 @Composable
 fun OwnerCard(name: String, bio: String, image: Int) {
+    val context = LocalContext.current
+
+    val gmmIntentUri = Uri.parse("fb://root")
+    val noIntentUri = Uri.parse("http://play.google.com/store/apps/details?id=com.facebook.katana")
+    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+    val noIntent = Intent(Intent.ACTION_VIEW, noIntentUri)
 
     Row(
         modifier = Modifier
@@ -87,7 +97,19 @@ fun OwnerCard(name: String, bio: String, image: Int) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             FloatingActionButton(
                 modifier = Modifier.size(40.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    try {
+                        mapIntent.let {
+
+                            ContextCompat.startActivity(context, mapIntent, null)
+                        }
+                    } catch (e: Exception) {
+                        mapIntent.let {
+
+                            ContextCompat.startActivity(context, noIntent, null)
+                        }
+                    }
+                },
                 backgroundColor = colorResource(id = R.color.blue)
             ) {
                 val owner: Painter = painterResource(id = R.drawable.ic_messanger)

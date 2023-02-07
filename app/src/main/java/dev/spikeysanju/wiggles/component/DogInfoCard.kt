@@ -15,6 +15,9 @@
  */
 package dev.spikeysanju.wiggles.component
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,13 +34,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import dev.spikeysanju.wiggles.R
 
 @Composable
 fun DogInfoCard(name: String, gender: String, location: String) {
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,7 +68,14 @@ fun DogInfoCard(name: String, gender: String, location: String) {
                 Icon(
                     painter = locationIcon,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp, 16.dp),
+                    modifier = Modifier
+                        .size(16.dp, 16.dp)
+                        .clickable {
+                            val intent =
+                                Intent(Intent.ACTION_VIEW).setData(Uri.parse("geo:37.7749,-122.4192"))
+                            val chooser = Intent.createChooser(intent, "Launch Maps")
+                            ContextCompat.startActivity(context, chooser, null)
+                        },
                     tint = Color.Red
                 )
 
