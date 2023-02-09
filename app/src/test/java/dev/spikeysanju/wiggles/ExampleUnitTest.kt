@@ -20,6 +20,6 @@ package dev.spikeysanju.wiggles
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+//class ExampleUnitTest {
     // Add unit tests here
-}
+//}

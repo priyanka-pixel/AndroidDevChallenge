@@ -20,7 +20,7 @@ import dev.spikeysanju.wiggles.model.Dog
 import dev.spikeysanju.wiggles.model.Owner
 
 object FakeDogDatabase {
-    val owner = Owner("Spikey Sanju", "Developer & Pet Lover", R.drawable.owner)
+    private val owner = Owner("Spikey Sanju", "Developer & Pet Lover", R.drawable.owner)
     val dogList = listOf(
         Dog(
             0,
